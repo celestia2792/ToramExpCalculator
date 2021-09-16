@@ -1,0 +1,175 @@
+﻿<Window x:Class="ToramExpCalculator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        xmlns:local="clr-namespace:ToramExpCalculator"
+        mc:Ignorable="d"
+        Title="ToramExpCalculator" Height="400" Width="600">
+    <Window.Resources>
+        <Style TargetType="{x:Type Window}">
+            <Setter Property="FontFamily" Value="./Fonts/#나눔고딕"/>
+        </Style>
+        <Style TargetType="ComboBoxItem">
+            <Setter Property="IsEnabled" Value="{Binding IsEnabled}"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <TabControl>
+            <TabItem FontSize="13" Header="시나리오 시작위치 계산">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+                    <Border BorderBrush="Black" BorderThickness="0.5px" VerticalAlignment="Bottom"/>
+                    <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0.5px" VerticalAlignment="Bottom"/>
+                    <TextBlock FontSize="20" FontWeight="DemiBold" Margin="10">목표 레벨을 기준으로 시나리오 시작위치 및 일기 요구량 계산</TextBlock>
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2.5*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock FontSize="15" Margin="10,25,10,10" Grid.Row="0">메인 시나리오 종착점</TextBlock>
+                        <TextBlock FontSize="15" Margin="10" VerticalAlignment="Center" Grid.Row="1">시작 레벨</TextBlock>
+                        <TextBlock FontSize="15" Margin="10,10,10,25" Grid.Row="2">목표 레벨</TextBlock>
+                        <ComboBox x:Name="ADestMqBox" FontSize="11" Margin="50,25,50,10" ItemsSource="{Binding Items}" DisplayMemberPath="Option" SelectedValuePath="Value" Grid.Column="1"/>
+                        <Grid Grid.Row="1" Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="AStartLevel" FontSize="15" Margin="50,10,10,10" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15">경험치%</TextBlock>
+                            <TextBox x:Name="AStartLVval" Grid.Column="2" FontSize="15" Margin="10,10,50,10" VerticalAlignment="Center"/>
+                        </Grid>
+                        <Grid Grid.Row="2" Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="ADestLevel" FontSize="15" Margin="50,10,10,25" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Margin="10,10,10,25" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15">경험치%</TextBlock>
+                            <TextBox x:Name="ADestLVval" Grid.Column="2" FontSize="15" Margin="10,10,50,25" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Click="AConfirm" Margin="20">계산하기</Button>
+                        <TextBlock FontWeight="ExtraBold" FontSize="30" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">=></TextBlock>
+                        <Label x:Name="AResultWindow" Grid.Column="2" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem FontSize="13" Header="도달 레벨 계산">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+                    <Border BorderBrush="Black" BorderThickness="0.5px" VerticalAlignment="Bottom"/>
+                    <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0.5px" VerticalAlignment="Bottom"/>
+                    <TextBlock FontSize="20" FontWeight="DemiBold" Margin="10">메인 시나리오 범위를 기준으로 예상 도달레벨 계산</TextBlock>
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2.5*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock FontSize="15" Margin="10,25,10,10" Grid.Row="0">메인 시나리오 시작점</TextBlock>
+                        <TextBlock FontSize="15" Margin="10" VerticalAlignment="Center" Grid.Row="1">메인 시나리오 종착점</TextBlock>
+                        <TextBlock FontSize="15" Margin="10,10,10,25" Grid.Row="2">시작 레벨</TextBlock>
+                        <ComboBox x:Name="BStartMqBox" FontSize="11" Margin="50,25,50,10" ItemsSource="{Binding Items}" DisplayMemberPath="Option" SelectedValuePath="Value" Grid.Column="1"/>
+                        <ComboBox x:Name="BDestMqBox" FontSize="11" Margin="50,17.5,50,17.5" ItemsSource="{Binding Items}" DisplayMemberPath="Option" SelectedValuePath="Value" Grid.Column="1" Grid.Row="1"/>
+                        <Grid Grid.Row="2" Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="BStartLevel" FontSize="15" Margin="50,10,10,25" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Margin="10,10,10,25" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15">경험치%</TextBlock>
+                            <TextBox x:Name="BStartLVval" Grid.Column="2" FontSize="15" Margin="10,10,50,25" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Click="BConfirm" Margin="20">계산하기</Button>
+                        <TextBlock FontWeight="ExtraBold" FontSize="30" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">=></TextBlock>
+                        <Label x:Name="BResultWindow" Grid.Column="2" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem FontSize="13" Header="시작 레벨 계산">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+                    <Border BorderBrush="Black" BorderThickness="0.5px" VerticalAlignment="Bottom"/>
+                    <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0.5px" VerticalAlignment="Bottom"/>
+                    <TextBlock FontSize="20" FontWeight="DemiBold" Margin="10">메인 시나리오 범위 및 목표 레벨을 기준으로 시작 레벨 계산</TextBlock>
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2.5*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock FontSize="15" Margin="10,25,10,10" Grid.Row="0">메인 시나리오 시작점</TextBlock>
+                        <TextBlock FontSize="15" Margin="10" VerticalAlignment="Center" Grid.Row="1">메인 시나리오 종착점</TextBlock>
+                        <TextBlock FontSize="15" Margin="10,10,10,25" Grid.Row="2">목표 레벨</TextBlock>
+                        <ComboBox x:Name="CStartMqBox" FontSize="11" Margin="50,25,50,10" ItemsSource="{Binding Items}" DisplayMemberPath="Option" SelectedValuePath="Value" Grid.Column="1"/>
+                        <ComboBox x:Name="CDestMqBox" FontSize="11" Margin="50,17.5,50,17.5" ItemsSource="{Binding Items}" DisplayMemberPath="Option" SelectedValuePath="Value" Grid.Column="1" Grid.Row="1"/>
+                        <Grid Grid.Row="2" Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="CDestLevel" FontSize="15" Margin="50,10,10,25" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Margin="10,10,10,25" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15">경험치%</TextBlock>
+                            <TextBox x:Name="CDestLVval" Grid.Column="2" FontSize="15" Margin="10,10,50,25" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Click="CConfirm" Margin="20">계산하기</Button>
+                        <TextBlock FontWeight="ExtraBold" FontSize="30" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">=></TextBlock>
+                        <Label x:Name="CResultWindow" Grid.Column="2" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
