@@ -1,4 +1,5 @@
-﻿using System;
+﻿//경험치를 계산합니다
+using System;
 using System.Collections.Generic;
 using System.Windows;
 
